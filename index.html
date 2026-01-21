@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="node_modules/reveal.js/dist/theme/white.css" />
+    <link rel="stylesheet" href="./styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Testování komponent</title>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h1>Vitest browser mode</h1>
+        </section>
+
+        <section>
+          <aside class="notes">
+            <p>
+              Na testování se dá dívat z různých úhlů pohledu. A myslím si, že než začnu testy psát,
+              měl bych si položit otázku, proč ty testy chci psát. Protože ta odpověď pak může vést
+              k tomu, jaké testy píšu a jaké nástroje k nim používám.
+            </p>
+            <p>
+              Já jsem si na otázku odpověděl tak, že vzhledem k tomu, že píšu testy pro frontend,
+              tak od testu očekávám, že mi dokáže popsat, jak se aplikace chová z pohledu uživatele
+              v různých situacích a po různých interakcích. Proto nejvíce testů, které píšu jsou
+              component testy.
+            </p>
+            <p>
+              Component testy vezmou jednu konkrétní komponentu z aplikace, vykreslí ji a simulují
+              různé uživatelské interakce. Vzhledem k tomu, že některé komponenty a z mého pohledu
+              většina komponent, které jsou hodny testování, spolupracují s jinými komponentami a
+              konzumují data z API případně jiných zdrojů, řadím tyto testy mezi integrační testy.
+              Veřejně se tím vlastně přiznávám k tomu, že testovací pyramidu nedodržuji.
+            </p>
+          </aside>
+          <h2>Jaké testy nás zajímají v této přednášce</h2>
+          <ul>
+            <li class="fragment">Proč psát testy</li>
+            <li class="fragment">Component testy</li>
+            <li class="fragment">Integrační testy</li>
+          </ul>
+        </section>
+
+        <section>
+          <aside class="notes">
+            <p>
+              Vitest je testovací framework pro JavaScript a TypeScript. Je relativně nový a vznikl
+              v podstatě tak, že se inspiroval nejpopulárnějším testovacím frameworkem v té době, to
+              byl jest, a přepsal ho znovu a lépe.
+            </p>
+            <p>
+              Browser mode je relativně nová funkce testovacího frameworku Vitest. Browser mode je
+              výhodný pro component testy. A to z toho důvodu, že uživatel s aplikací interaguje
+              přes prohlížeč. Pokud tedy mým cílem je simulovat uživatelské chování, je ideální mít
+              k dispozici stejné prostředí, jaké má uživatel.
+            </p>
+            <p>
+              Což je docela "novinka" ve světě JavaScript testování, protože většina běžně
+              používaných testovacích frameworků běží v Node.js prostředí a DOM a další webové API
+              je simulováno pomocí knihoven jako JSDOM nebo podobných.
+            </p>
+          </aside>
+          <h2>Jak do toho zapadá vitest browser mode</h2>
+          <ul>
+            <li class="fragment">Vitest</li>
+            <li class="fragment">Browser mode</li>
+            <li class="fragment">JSDOM</li>
+          </ul>
+        </section>
+
+        <section>
+          <aside class="notes">
+            <p>
+              Tady přichází první výhoda browser modu. Browser mode integruje téměř vše, co k
+              testování komponent potřebuju a nemusím tedy hledat externí knihovny.
+            </p>
+            <p>
+              Jedinnou výjimkou je renderovací funkce pro konkrétní framework. Vitest oficiálně
+              podporuje knihovny pro čtyři hlavní frameworky React, Angular, Vue a Svelte a pak
+              několik dalších komunitních knihoven pro další frameworky jako Solid nebo Lit.
+            </p>
+            <p>
+              Pokud používáte jiný framework, nebo třeba nechcete použít oficicální knihovny můžete
+              ještě integrovat nějakou knihovnu z ekosystému Testing Library.
+            </p>
+          </aside>
+          <h2>Co potřebuju k napsání testu</h2>
+          <ul>
+            <li class="fragment">Vitest browser mode</li>
+            <li class="fragment">A to je všechno</li>
+            <li class="fragment">Skoro</li>
+            <li class="fragment">Ještě renderovací knihovnu</li>
+          </ul>
+        </section>
+
+        <section>
+          <aside class="notes">
+            <p>
+              Já aktuálně poutívám také testing library pro Angular, protože až včera, když jsem
+              připravoval tuto přednášku, tak jsem zjistil, že pro Angular existuje oficiální
+              knihovna.
+            </p>
+            <p>
+              Testing library je velmi populární testovací knihovna pro testování komponent napříč
+              testovacími frameworky, jako vitest nebo jest, tak napříč UI frameworky jako React,
+              Angular...
+            </p>
+            <p>
+              Vznikla v roce 2018 původně jako react-testing-library, ale velmi rychle se rozrostla
+              a stala se de facto standardem pro testování komponent v JS světě. Dokonce je tak
+              populární, že některé testovací frameworky jako Playwright ve verzi 1.27 převzali její
+              API jako své vlastní a i oficiální knihovny pro browser mode ve Vitestu poskytují
+              stejné API.
+            </p>
+          </aside>
+          <h2>Testing library</h2>
+          <ul>
+            <li class="fragment">Knihovna použitelná napříč frameworky</li>
+            <li class="fragment">"Standard" mezi testovacími knihovnami</li>
+          </ul>
+        </section>
+
+        <section>
+          <aside class="notes">
+            <p>
+              Takhle nějak vypadá test napasaný pomocí Vitest browser mode a testing library. Tady
+              je ta render funkce, kterou beru z testing library. Zbytek je už jen Vitest.
+            </p>
+            <p>
+              Mám tady komponentu pro seznam uživatelů, která dělá to, že na začtáktu načte ze
+              serveru první stránku a když uživatel zadá nějaký filtr, tak se znovu načtou data ser
+              serveru.
+            </p>
+            <p>
+              V testu tedy čekám, až se zobrazí první stránka uživatelů. Pomocí lokátorů čekám, až
+              se zobrazí tři tádky v tabulce a ověřím, že obsahují správné uživatele. Poté lokátorem
+              podle labelu vyplním filtery a opět čekám, že se mi z bakcendu vrátí správná data.
+            </p>
+            <p>
+              Všimněte si těch lokátorů, getByRole, getByLabelText. Tohle je jedna z těch
+              revolučních myšlenek, kterou testing library přinesla. Výchozí lokátory jsou nastavené
+              tak, aby co nejvíce odpovídaly tomu, jak uživatelé skutečně aplikaci používají.
+              Uživatel se neřídí nějakými ID nebo css selektory, tedy ani naše testy by neměly.
+            </p>
+            <p>
+              Druhá velmi příjemná věc je to automatické čekání. Automatické čekání vitest opět
+              okopíroval od Playwrightu, který to okopíroval od Cypressu. Funkce expect v tomto
+              případě neotestuje synchronně, že element má dannou hodnotu, ale expect čeká do té
+              doby, dokud element nebude mít dannou hodnotu nebo dokud nevytiká timeout. Přesně tak
+              se totiž chová i uživatel. Prostě čeká a když se nedočká, tak zařve.
+            </p>
+            <p>
+              V případě asynchronních událostí v node js prostředí nemusí být UI správně
+              aktualizované okamžitě a musím manuálně testu trochu pomoct, například v případě
+              Angularu ručně nechat proběhnout asynchronní události a zavolat detekci změn. A to
+              nechci ze dvou důvodů. Zaprvé proto, že tím zastupuju něco, co se standardně děje
+              automaticky a testy se pak jednoduše stanou flaky. Druhý důvod je, že pro každý
+              framework se to řeší trošku jinak a jako vývojář se musím učit něco navíc. Ve Vitestu
+              tohle všechno odpadá, drtivá většina component testů napsane ve vitest browser mode
+              jsou totožné napříč frameworky a navíc se chovají tak, jak je vidí uživatel.
+            </p>
+          </aside>
+          <h2>Jak test vypadá</h2>
+          <pre data-id="observable">
+              <code class="stretch language-typescript" data-line-numbers="2,4,13-25">
+                <script type="text/template">
+import { render } from '@testing-library/angular';
+import { http, HttpResponse } from 'msw'
+import { setupWorker } from 'msw/browser'
+import { page, userEvent } from 'vitest/browser';
+
+const worker = setupWorker(...handlers)
+beforeAll(() => worker.start())
+afterEach(() => worker.resetHandlers())
+afterAll(() => worker.stop())
+
+it('should load first page of users on init and reload on filter change', async () => {
+  const { http } = await render(UserList);
+
+  await expect.element(page.getByRole('row')).toHaveLength(3);
+  await expect.element(page.getByRole('row').nth(0)).toHaveTextContent('user1UserOne');
+  await expect.element(page.getByRole('row').nth(1)).toHaveTextContent('user2UserTwo');
+  await expect.element(page.getByRole('row').nth(2)).toHaveTextContent('user3UserThree');
+
+  await userEvent.fill(page.getByLabelText('Username'), '3');
+  await userEvent.fill(page.getByLabelText('First Name'), 'Us');
+  await userEvent.fill(page.getByLabelText('Last Name'), 'Th');
+
+  await expect.element(page.getByRole('row')).toHaveLength(1);
+  await expect.element(page.getByRole('row').first()).toHaveTextContent('user3UserThree');
+});
+                </script>
+              </code>
+            </pre>
+        </section>
+
+        <section>
+          <aside class="notes">
+            <p>
+              A jak to vlastně funguje? Já jsem několikrát tady zmínil, že Vitest browser mode
+              okopíroval něco od Playwrightu, který to okopíroval do někoho dalšího. Kdo Playwright
+              používá, tak si jistě všiml, že ten test, který jsem tady ukazoval vypadá téměř stejně
+              jako test v Playwrightu. A není to jen tím, že testovací knihovny od sebe okopírovaly
+              API. Vitest browser mode totiž používá pod kapotou Playwright pro spuštění testů v
+              reálném prohlížeči. Tedy reálně to může znamenat, že pro psaní component testů a e2e
+              testů používáte stejný nástroj, ty testy pak vypadají velmi podobně, ne-li stejně a
+              tedy konečně odpadá další výmluva, kterou často slyším, když se někde pokusím byť jen
+              naznačit, že my frontenďáci bychom se měli přinejmenším podílet na psaní e2e testů.
+              Jen malý dodatek, Playwright není ve vitestu zadrátovaný natvrdo, můžete ho nahradit
+              například za WebdriverIO, ale je oficiálně doporučovaný.
+            </p>
+          </aside>
+          <h2>Playwright</h2>
+        </section>
+
+        <section>
+          <aside class="notes">
+            <p>
+              Doufám, že jsem alespoň někoho motivoval k tomu, aby si nějaký ten test napsal,
+              protože jednodušší už to snad být nemůže. Děkuji za pozornost.
+            </p>
+          </aside>
+          <h2>Děkuji za pozornost</h2>
+        </section>
+      </div>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
