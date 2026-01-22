@@ -14,4 +14,5 @@ deck.initialize({
   autoAnimateEasing: 'ease-out',
   autoAnimateDuration: 0.4,
   autoAnimateUnmatched: false,
+  center: false,
 });

@@ -11,11 +11,41 @@
   <body>
     <div class="reveal">
       <div class="slides">
-        <section>
-          <h1>Vitest browser mode</h1>
+        <section data-background-image="./uvod.PNG" data-background-size="contain">
+          <aside class="notes">
+            <p>Ahoj. Moje dnešní přednáška bude o Vitest browser mode.</p>
+          </aside>
+          <div class="slide intro">
+            <h1>Vitest browser mode</h1>
+            <p class="author">Michal Štrajt, 22. 1.2026</p>
+          </div>
         </section>
 
-        <section>
+        <section data-background-image="./obsah.PNG" data-background-size="contain">
+          <aside class="notes">
+            <p>
+              Vitest je testovací framework pro JavaScript a TypeScript. Je relativně nový a vznikl
+              v podstatě tak, že se inspiroval nejpopulárnějším testovacím frameworkem v té době, to
+              byl jest, a přepsal ho znovu a lépe.
+            </p>
+            <p>
+              Browser mode je relativně nová funkce testovacího frameworku Vitest, která umožňuje
+              spouštět testy přímo v reálném prohlížeči. Browser mode je výhodný pro component
+              testy. Což je docela "novinka" ve světě JavaScript testování, protože většina běžně
+              používaných testovacích frameworků běží v Node.js prostředí a DOM a další webové API
+              je simulováno pomocí knihoven jako JSDOM nebo podobných.
+            </p>
+          </aside>
+          <div class="slide content">
+            <h2>O čem to dnes bude</h2>
+            <ul>
+              <li class="fragment">Vitest</li>
+              <li class="fragment">Browser mode</li>
+            </ul>
+          </div>
+        </section>
+
+        <section data-background-image="./obsah.PNG" data-background-size="contain">
           <aside class="notes">
             <p>
               Na testování se dá dívat z různých úhlů pohledu. A myslím si, že než začnu testy psát,
@@ -30,48 +60,25 @@
             </p>
             <p>
               Component testy vezmou jednu konkrétní komponentu z aplikace, vykreslí ji a simulují
-              různé uživatelské interakce. Vzhledem k tomu, že některé komponenty a z mého pohledu
-              většina komponent, které jsou hodny testování, spolupracují s jinými komponentami a
-              konzumují data z API případně jiných zdrojů, řadím tyto testy mezi integrační testy.
-              Veřejně se tím vlastně přiznávám k tomu, že testovací pyramidu nedodržuji.
+              různé uživatelské interakce. Komponenty, které já většinou vyhodnoutím jako hodny
+              testování jsou komponenty, které obsahují nějakou logiku. Typicky se pak jedná o
+              komponentu zabalující celou stránku. Taková komponenta obvykle načítá data ze serveru,
+              zpracovává je a zobrazí je uživateli za pomoci menších prezentačních komponent. A
+              jelikož mi nedává smysl kteroukoliv z těchto částí komponenty mockovat, nazývám tyto
+              testy integrační component testy.
             </p>
           </aside>
-          <h2>Jaké testy nás zajímají v této přednášce</h2>
-          <ul>
-            <li class="fragment">Proč psát testy</li>
-            <li class="fragment">Component testy</li>
-            <li class="fragment">Integrační testy</li>
-          </ul>
+          <div class="slide content">
+            <h2>Jaké testy nás zajímají v této přednášce</h2>
+            <ul>
+              <li class="fragment">Proč psát testy</li>
+              <li class="fragment">Testy popisují chování aplikace z pohledu uživatele</li>
+              <li class="fragment">Integrační component testy</li>
+            </ul>
+          </div>
         </section>
 
-        <section>
-          <aside class="notes">
-            <p>
-              Vitest je testovací framework pro JavaScript a TypeScript. Je relativně nový a vznikl
-              v podstatě tak, že se inspiroval nejpopulárnějším testovacím frameworkem v té době, to
-              byl jest, a přepsal ho znovu a lépe.
-            </p>
-            <p>
-              Browser mode je relativně nová funkce testovacího frameworku Vitest. Browser mode je
-              výhodný pro component testy. A to z toho důvodu, že uživatel s aplikací interaguje
-              přes prohlížeč. Pokud tedy mým cílem je simulovat uživatelské chování, je ideální mít
-              k dispozici stejné prostředí, jaké má uživatel.
-            </p>
-            <p>
-              Což je docela "novinka" ve světě JavaScript testování, protože většina běžně
-              používaných testovacích frameworků běží v Node.js prostředí a DOM a další webové API
-              je simulováno pomocí knihoven jako JSDOM nebo podobných.
-            </p>
-          </aside>
-          <h2>Jak do toho zapadá vitest browser mode</h2>
-          <ul>
-            <li class="fragment">Vitest</li>
-            <li class="fragment">Browser mode</li>
-            <li class="fragment">JSDOM</li>
-          </ul>
-        </section>
-
-        <section>
+        <section data-background-image="./obsah.PNG" data-background-size="contain">
           <aside class="notes">
             <p>
               Tady přichází první výhoda browser modu. Browser mode integruje téměř vše, co k
@@ -87,16 +94,18 @@
               ještě integrovat nějakou knihovnu z ekosystému Testing Library.
             </p>
           </aside>
-          <h2>Co potřebuju k napsání testu</h2>
-          <ul>
-            <li class="fragment">Vitest browser mode</li>
-            <li class="fragment">A to je všechno</li>
-            <li class="fragment">Skoro</li>
-            <li class="fragment">Ještě renderovací knihovnu</li>
-          </ul>
+          <div class="slide content">
+            <h2>Co potřebuju k napsání testu</h2>
+            <ul>
+              <li class="fragment">Vitest browser mode</li>
+              <li class="fragment">A to je všechno</li>
+              <li class="fragment">Skoro</li>
+              <li class="fragment">Ještě renderovací knihovnu</li>
+            </ul>
+          </div>
         </section>
 
-        <section>
+        <section data-background-image="./obsah.PNG" data-background-size="contain">
           <aside class="notes">
             <p>
               Já aktuálně poutívám také testing library pro Angular, protože až včera, když jsem
@@ -116,23 +125,30 @@
               stejné API.
             </p>
           </aside>
-          <h2>Testing library</h2>
-          <ul>
-            <li class="fragment">Knihovna použitelná napříč frameworky</li>
-            <li class="fragment">"Standard" mezi testovacími knihovnami</li>
-          </ul>
+          <div class="slide content">
+            <h2>Testing library</h2>
+            <ul>
+              <li class="fragment">Knihovna použitelná napříč frameworky</li>
+              <li class="fragment">"Standard" mezi testovacími knihovnami</li>
+            </ul>
+          </div>
         </section>
 
-        <section>
+        <section data-background-image="./obsah.PNG" data-background-size="contain">
           <aside class="notes">
             <p>
-              Takhle nějak vypadá test napasaný pomocí Vitest browser mode a testing library. Tady
-              je ta render funkce, kterou beru z testing library. Zbytek je už jen Vitest.
+              Takhle nějak vypadá test napasaný pomocí Vitest browser mode a testing library. Kdo
+              používá testing library nebo Playwright, tomu ty testy budou velmi povědomé. A jak
+              jsem říkal, není to náhoda, ty testy vypadají téměř stejně.
             </p>
             <p>
-              Mám tady komponentu pro seznam uživatelů, která dělá to, že na začtáktu načte ze
-              serveru první stránku a když uživatel zadá nějaký filtr, tak se znovu načtou data ser
-              serveru.
+              Mám tady na otestování komponentu pro seznam uživatelů, která dělá to, že na začtátku
+              načte ze serveru první stránku a když uživatel zadá nějaký filtr, tak se znovu načtou
+              data serveru.
+            </p>
+            <p>
+              Z čeho se ten test skládá? Tady je ta render funkce, kterou beru z testing library.
+              Zbytek je už jen Vitest.
             </p>
             <p>
               V testu tedy čekám, až se zobrazí první stránka uživatelů. Pomocí lokátorů čekám, až
@@ -163,8 +179,8 @@
               jsou totožné napříč frameworky a navíc se chovají tak, jak je vidí uživatel.
             </p>
           </aside>
-          <h2>Jak test vypadá</h2>
-          <pre data-id="observable">
+          <div class="slide content">
+            <pre data-id="observable">
               <code class="stretch language-typescript" data-line-numbers="2,4,13-25">
                 <script type="text/template">
 import { render } from '@testing-library/angular';
@@ -195,35 +211,63 @@ it('should load first page of users on init and reload on filter change', async 
                 </script>
               </code>
             </pre>
+          </div>
         </section>
 
-        <section>
+        <section data-background-image="./obsah.PNG" data-background-size="contain">
           <aside class="notes">
             <p>
               A jak to vlastně funguje? Já jsem několikrát tady zmínil, že Vitest browser mode
               okopíroval něco od Playwrightu, který to okopíroval do někoho dalšího. Kdo Playwright
               používá, tak si jistě všiml, že ten test, který jsem tady ukazoval vypadá téměř stejně
               jako test v Playwrightu. A není to jen tím, že testovací knihovny od sebe okopírovaly
-              API. Vitest browser mode totiž používá pod kapotou Playwright pro spuštění testů v
-              reálném prohlížeči. Tedy reálně to může znamenat, že pro psaní component testů a e2e
-              testů používáte stejný nástroj, ty testy pak vypadají velmi podobně, ne-li stejně a
-              tedy konečně odpadá další výmluva, kterou často slyším, když se někde pokusím byť jen
-              naznačit, že my frontenďáci bychom se měli přinejmenším podílet na psaní e2e testů.
-              Jen malý dodatek, Playwright není ve vitestu zadrátovaný natvrdo, můžete ho nahradit
+              API. Vitest browser mode totiž používá na pozadí Playwright pro spuštění testů v
+              reálném prohlížeči.
+            </p>
+            <p>
+              Tedy reálně to může znamenat, že pro psaní component testů a e2e testů používáte
+              stejný nástroj, ty testy pak vypadají velmi podobně, ne-li stejně a tedy konečně
+              odpadá další výmluva, kterou často slyším, když se někde pokusím byť jen naznačit, že
+              my frontenďáci bychom se měli přinejmenším podílet na psaní e2e testů.
+            </p>
+            <p>
+              Ještě jako dodatek, Playwright není ve vitestu zadrátovaný natvrdo, můžete ho nahradit
               například za WebdriverIO, ale je oficiálně doporučovaný.
             </p>
           </aside>
-          <h2>Playwright</h2>
+          <div class="slide content">
+            <h2>A jak to teda funguje</h2>
+            <ul>
+              <li class="fragment">Vitest browser mode používá na pozadí Playwright</li>
+              <li class="fragment">Můžete používat stejný nástroj pro component i e2e testy</li>
+              <li class="fragment">Playwright je pouze doporučený modul</li>
+            </ul>
+          </div>
         </section>
 
-        <section>
+        <section data-background-image="./obsah.PNG" data-background-size="contain">
           <aside class="notes">
             <p>
-              Doufám, že jsem alespoň někoho motivoval k tomu, aby si nějaký ten test napsal,
-              protože jednodušší už to snad být nemůže. Děkuji za pozornost.
+              Co bych chtěl, abyste se z dneší přednášky odnesli? V první řadě, pokud jste
+              frontenďáci, zamyslete se nad tím, proč píšete nebo nepíšete testy. Pokud se vaše
+              odpověď potká s tou mojí, rozhodně dejte šanci Vitest browser mode, ušetří vám čas a
+              nervy.
             </p>
           </aside>
-          <h2>Děkuji za pozornost</h2>
+          <div class="slide content">
+            <h2>Co si odnést</h2>
+            <ul>
+              <li class="fragment">Zamyslete se nad tím, proč (ne)píšete testy</li>
+              <li class="fragment">Dejte šanci Vitest browser mode</li>
+            </ul>
+          </div>
+        </section>
+
+        <section data-background-image="./zaver.PNG" data-background-size="contain">
+          <div class="slide outro">
+            <span class="name">Michal Štrajt</span>
+            <span>Tech leader</span>
+          </div>
         </section>
       </div>
     </div>
